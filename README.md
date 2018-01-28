@@ -1,7 +1,7 @@
 # toddleplayer
 This is the manual to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons. 
 
-##Hardware
+## Hardware
 
 Required: 
 
