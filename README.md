@@ -17,15 +17,21 @@ Required:
 
 * Speakers: I'm using pretty cheap fullrange drivers [Visaton FR 87](https://www.conrad.de/de/34-zoll-breitband-lautsprecher-chassis-visaton-fr-87-15-w-4-1173601.html)
 
-* A Powerbank: I'm using a 10000mAh one [LERVING 10000mAh Powerbank](https://www.amazon.de/LERVING-10000mAh-Powerbank-Ladeger%C3%A4t-Technologie/dp/B00Q2M3AAM/ref=cm_cr_arp_d_product_top?ie=UTF8)
+* A Powerbank: I'm using a 10000mAh one [LERVING 10000mAh](https://www.amazon.de/LERVING-10000mAh-Powerbank-Ladeger%C3%A4t-Technologie/dp/B00Q2M3AAM/ref=cm_cr_arp_d_product_top?ie=UTF8)
+
+* A [USB RFID READER](https://smile.amazon.de/gp/product/B018OYOR3E/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1)
 
 ### Wiring
 
 * The first thing you have to do is soldering the pHAT DAC to the Raspberry. 
 * I soldered all of the pins but you can see how to do it the lazy way here: [pHAT DAC Soldering](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
+* Connect the Powerbank to the Raspberry and to the audio amplifier
+* Connect the Speakers to the amplifier and connect the 3.5mm Audio Jack to the amplifier
+* Connect up to 5 pushbuttons to the Raspberry: GPIO -- Button -- GND
+
 
 Here is the wiring of the toddleplayer:
-![alt text]( "toddleplayer wiring")
+![alt text](https://raw.githubusercontent.com/Thaiminater/toddleplayer/master/toddleplayer_wiring.JPG "toddleplayer wiring")
 
 ## Software
 This is based on the Pi Musicbox: https://github.com/pimusicbox/pimusicbox ,
@@ -72,3 +78,23 @@ Then you have to download my forked variant of fsahli's music-cards from here:
 https://github.com/Thaiminater/music-cards
 
 Then run 'python config.py' to select the reader from the inputs.
+
+
+### Configuration
+
+Now you can create as many folders as you want in the /music/ folder and add the RFID tags accordingly
+
+```
+python add_card.py
+```
+
+Now you can choose either if you want to add a local folder by pressing [L] or a spotify playlist by pressing [S]
+
+```
+file:/music/foldername/
+```
+
+
+
+
+
