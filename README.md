@@ -19,9 +19,19 @@ Required:
 
 * A Powerbank: I'm using a 10000mAh one [LERVING 10000mAh Powerbank](https://www.amazon.de/LERVING-10000mAh-Powerbank-Ladeger%C3%A4t-Technologie/dp/B00Q2M3AAM/ref=cm_cr_arp_d_product_top?ie=UTF8)
 
+### Wiring
+
+* The first thing you have to do is soldering the pHAT DAC to the Raspberry. 
+* I soldered all of the pins but you can see how to do it the lazy way here: [pHAT DAC Soldering](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
+
+Here is the wiring of the toddleplayer:
+![alt text]( "toddleplayer wiring")
+
 ## Software
 This is based on the Pi Musicbox: https://github.com/pimusicbox/pimusicbox ,
+
 the music-cards mopidy extension: https://github.com/fsahli/music-cards ,
+
 and the mopidy-ttsgpio extension: https://github.com/9and3r/mopidy-ttsgpio
 
 ### Pi MusicBox
