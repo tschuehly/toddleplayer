@@ -94,6 +94,7 @@ Now you can choose either if you want to add a local folder by pressing [L] or a
 file:/music/foldername/
 ```
 
+&#169; Thomas Schühly
 
 
 
