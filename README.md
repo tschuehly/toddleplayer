@@ -45,24 +45,6 @@ To create this Player you first have to install Pi Musicbox on your local Raspbe
 You can download the Image frome here: https://github.com/pimusicbox/pimusicbox/releases/tag/v0.7.0rc5
 The Installation Steps are found on the offical website of Pi MusicBox: http://www.pimusicbox.com/
 
-### mopidy-ttsgpio
-
-You can install the extension by running 
-```
-pip install Mopidy-TtsGpio
-```
-Then you have to add the configuration  the MusicBox setting.ini file found in /boot/config/.
-```
-[ttsgpio]
-debug_gpio_simulate = false # Set true to emulate GPIO buttons with on screen buttons
-pin_button_main = 17
-pin_button_next = 22
-pin_button_previous = 23
-pin_button_vol_up = 24
-pin_button_vol_down = 25
-pin_play_led = 27
-```
-
 ### music-cards extension
 Next you have to install python evdev. 
 ```
