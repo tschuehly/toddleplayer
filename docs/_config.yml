@@ -1,0 +1,18 @@
+encoding: UTF-8
+# Site settings
+title: toddleplayer
+description: toddleplayer
+baseurl: "/"
+url: "tschuehly.github.io/toddleplayer"
+#baseurl: "/docs"
+#url: "127.0.0.1:4000" #
+
+# User settings
+username: Thomas Schühly
+email: thomas.schuehly@outlook.com
+
+# Google-analytics
+google-analytics:
+  id: ""
+
+exclude: ['package.json', 'src' , 'node_modules']
