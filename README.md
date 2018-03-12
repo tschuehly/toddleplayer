@@ -1,9 +1,9 @@
 # toddleplayer
-This is the manual to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons. 
+This is the manual to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons.
 
 ## Hardware
 
-Required: 
+Required:
 
 * [Raspberry Pi](https://www.raspberrypi.org/products/): I'm using a Pi Zero W
 
@@ -23,7 +23,7 @@ Required:
 
 ### Wiring
 
-* The first thing you have to do is soldering the pHAT DAC to the Raspberry. 
+* The first thing you have to do is soldering the pHAT DAC to the Raspberry.
 * I soldered all of the pins but you can see how to do it the lazy way here: [pHAT DAC Soldering](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
 * Connect the Powerbank to the Raspberry and to the audio amplifier
 * Connect the Speakers to the amplifier and connect the 3.5mm Audio Jack to the amplifier
@@ -31,22 +31,22 @@ Required:
 
 
 Here is the wiring of the toddleplayer:
-![alt text](https://raw.githubusercontent.com/Thaiminater/toddleplayer/master/toddleplayer_wiring.JPG "toddleplayer wiring")
+![alt text](https://raw.githubusercontent.com/tschuehly/toddleplayer/master/toddleplayer_wiring.JPG "toddleplayer wiring")
 
 ## Software
 This is based on the Pi Musicbox: https://github.com/pimusicbox/pimusicbox ,
 
 the music-cards mopidy extension: https://github.com/fsahli/music-cards ,
 
-and the mopidy-ttsgpio extension: https://github.com/9and3r/mopidy-ttsgpio
+and my musicbox_gpio script : https://github.com/tschuehly/musicbox_gpio
 
 ### Pi MusicBox
-To create this Player you first have to install Pi Musicbox on your local Raspberry. 
+To create this Player you first have to install Pi Musicbox on your local Raspberry.
 You can download the Image frome here: https://github.com/pimusicbox/pimusicbox/releases/tag/v0.7.0rc5
 The Installation Steps are found on the offical website of Pi MusicBox: http://www.pimusicbox.com/
 
 ### music-cards extension
-Next you have to install python evdev. 
+Next you have to install python evdev.
 ```
 wget http://dl.piwall.co.uk/python-evdev_0.4.1-1_armhf.deb
 dpkg -i python-evdev_0.4.1-1_armhf.deb
@@ -57,9 +57,28 @@ pip install python-mpd2
 ```
 Then you have to download my forked variant of fsahli's music-cards from here:
 
-https://github.com/Thaiminater/music-cards
+https://github.com/tschuehly/music-cards
 
-Then run 'python config.py' to select the reader from the inputs.
+Then run 'python config.py' to select the RFID reader from the inputs.
+
+### musicbox_gpio script
+
+The next step is to download my musicbox_gpio python script from here: https://github.com/tschuehly/musicbox_gpio
+
+You also have to configure it. Place it in your desired folder but not /music because this is gonna slow down the booting sequence.
+
+The easiest way to start the script on startup is to append the following lines to the /etc/rc.local.
+
+```
+/PATH_TO/start.sh 2>&1 | tee /PATH_TO/start.log
+```
+
+then you create one start.sh and start.log in a desired folder and paste this into the start.sh
+```
+#!/bin/bash
+sleep 30
+python /PATH_TO/gpio_control.py &
+```
 
 
 ### Configuration
@@ -72,12 +91,13 @@ python add_card.py
 
 Now you can choose either if you want to add a local folder by pressing [L] or a spotify playlist by pressing [S]
 
+then you have to type in the folder you want to associate with the RFID Card
 ```
 file:/music/foldername/
 ```
 
+To quit you just have to press CTRL + C
+
+
+
 &#169; Thomas Schühly
-
-
-
-
