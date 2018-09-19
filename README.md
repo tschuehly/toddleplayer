@@ -1,79 +1,87 @@
 # toddleplayer
-This is the manual to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons.
+toddleplayer is the manual and a bunch of scripts to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons.
 
 ## Hardware
 
 Required:
 
-* [Raspberry Pi](https://www.raspberrypi.org/products/): I'm using a Pi Zero W
+* A [Raspberry Pi](https://www.raspberrypi.org/products/): I'm using a Pi Zero W
 
-* USB Soundcard or DAC: I'm using a [pHAT DAC](https://shop.pimoroni.com/products/phat-dac)
+* DAC: You can either use a [pHAT DAC 15€](https://shop.pimoroni.com/products/phat-dac)
+or a [PCM5102A 3€](https://www.aliexpress.com/item/1Pcs-PCM5102A-DAC-Sound-Card-Board-pHAT-3-5mm-Stereo-Jack-24-Bits-Digital-Audio-Module/32836159429.html?spm=a2g0s.9042311.0.0.27424c4dOmDi8X)
 
-* Any kind of casing: I'm using a cheap  [Wooden Box](http://www.ebay.de/itm/ZWEIERGRUPPE-EINFACHES-HOLZ-HOLZKISTE-TRUNK-OHNE-GRIFFE-FUR-SERVIETTEN/152320770330?hash=item237706811a:g:3lUAAOSw5cNYLHL1)
+* Any kind of casing: [Wooden Box](http://www.ebay.de/itm/ZWEIERGRUPPE-EINFACHES-HOLZ-HOLZKISTE-TRUNK-OHNE-GRIFFE-FUR-SERVIETTEN/152320770330?hash=item237706811a:g:3lUAAOSw5cNYLHL1)
 
-* A few push buttons: I'm using a few cheap [Push Buttons](https://www.ebay.de/itm/152295745935?_trksid=p2060353.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
+* A few push buttons: [Push Buttons](https://www.ebay.de/itm/152295745935?_trksid=p2060353.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
 
-* A Digital Audio Amplifier: I'm using a [PAM8403](https://www.ebay.de/itm/PAM8403-Volume-Adjustment-2-Kanal-Digital-Amplifier-Module-Audioverst%C3%A4rker/271513588858?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2060353.m2749.l2649)
+* A Digital Audio Amplifier:  [PAM8403](https://www.aliexpress.com/store/product/MCIGICM-SAMIORE-ROBOT-PAM8403-mini-5V-digital-amplifier-board-with-switch-potentiometer-can-be-USB-powered/506373_32907755464.html)
 
-* Speakers: I'm using pretty cheap fullrange drivers [Visaton FR 87](https://www.conrad.de/de/34-zoll-breitband-lautsprecher-chassis-visaton-fr-87-15-w-4-1173601.html)
+* Passive Speakers: [Visaton FR 87](https://www.conrad.de/de/34-zoll-breitband-lautsprecher-chassis-visaton-fr-87-15-w-4-1173601.html)
 
-* A Powerbank: I'm using a 10000mAh one [LERVING 10000mAh](https://www.amazon.de/LERVING-10000mAh-Powerbank-Ladeger%C3%A4t-Technologie/dp/B00Q2M3AAM/ref=cm_cr_arp_d_product_top?ie=UTF8)
+* A [Powerbank](https://www.amazon.de/LERVING-10000mAh-Powerbank-Ladeger%C3%A4t-Technologie/dp/B00Q2M3AAM/ref=cm_cr_arp_d_product_top?ie=UTF8) or some 18650 Li-Ion Cells and a [Power Supply Board](https://www.aliexpress.com/item/5PCS-5V-Step-Up-Power-Supply-Boost-Converter-Module-Lithium-Battery-Charging-Protection-Board-LED-Display/32852290552.html)
 
-* A [USB RFID READER](https://smile.amazon.de/gp/product/B018OYOR3E/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1)
+* A [USB RFID READER](https://smile.amazon.de/gp/product/B018OYOR3E/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) and USB OTG cable or a [MFRC-522](https://www.aliexpress.com/store/product/MCIGICM-MFRC-522-RC522-mfrc-522-RFID-RF-IC-card-inductive-module-S50-Fudan-card-key/506373_32905192359.html)
 
 ### Wiring
 
 #### PCMA5102A
 To wire up the cheaper PCMA5102A breakout board you have to wire like this:
-* VCC <–> 5V Pin 2
-* GND <–> GND
-* FLT <–> GND
-* DMP <–> GND
-* SCL <–> GND
-* BCK <–> GPIO18 Pin 12
-* DIN <–> GPIO21 Pin 40
-* LCK <–> GPIO19 Pin 35
-* FMT <–> GND
-* XMT <–> 10k Resistor <–> 3,3V of the PCM5102A board
 
-* The first thing you have to do is soldering the pHAT DAC to the Raspberry.
-* I soldered all of the pins but you can see how to do it the lazy way here: [pHAT DAC Soldering](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
-* Connect the Powerbank to the Raspberry and to the audio amplifier
-* Connect the Speakers to the amplifier and connect the 3.5mm Audio Jack to the amplifier
-* Connect up to 5 pushbuttons to the Raspberry: GPIO -- Button -- GND
+| PCMA | Raspberry     |
+|------|---------------|
+| VCC  | 5V PIN 2      |
+| GND  | GND           |
+| FLT  | GND           |
+| DMP  | GND           |
+| SCL  | GND           |
+| BCK  | GPIO18 PIN 12 |
+| DIN  | GPIO21 PIN 40 |
+| LCK  | GPIO19 Pin 35 |
+| FMT  | GND           |
+
+XMT <–> 10k Resistor <–> 3,3V of the PCM5102A board
+
+#### pHAT DAC
+If you use the pHAT DAC you have to solder it [pHAT DAC ](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
 
 
-Here is the wiring of the toddleplayer:
-![alt text](https://raw.githubusercontent.com/tschuehly/toddleplayer/master/toddleplayer_wiring.JPG "toddleplayer wiring")
 
 ## Software
-This is based on the Pi Musicbox: https://github.com/pimusicbox/pimusicbox ,
+toddleplayer is based on the Pi Musicbox Image: https://github.com/pimusicbox/pimusicbox ,
 
-the music-cards mopidy extension: https://github.com/fsahli/music-cards ,
+the music-cards mopidy extension which I altered heavily: https://github.com/fsahli/music-cards ,
 
-and my musicbox_gpio script : https://github.com/tschuehly/musicbox_gpio
 
 ### Pi MusicBox
 To create this Player you first have to install Pi Musicbox on your local Raspberry.
-You can download the Image frome here: https://github.com/pimusicbox/pimusicbox/releases/tag/v0.7.0rc5
-The Installation Steps are found on the offical website of Pi MusicBox: http://www.pimusicbox.com/
+You can download the latest image frome here: [RC6](https://github.com/pimusicbox/pimusicbox/releases/tag/v0.7.0RC6)
+
+Burn the image to an SD Card with [Etcher](https://etcher.io/)
+
+1. Put the SD-card into your computer. Ignore the format warning when you're on windows. Open the contents of the 'config' folder of SD-Card in your Finder/Explorer.
+
+2. Open settings.ini and add your Wifi network and password to the file
+3. Change 	```enable_ssh = true```
+
+4. Set ```output = hifiberry_dac```
 
 ### music-cards extension
+
+If you use a USB RFID Reader continue here. If you use the MFRC-522 continue down below with the RC522_music-cards extension.
+
 Next you have to install python evdev.
+
 ```
 wget http://dl.piwall.co.uk/python-evdev_0.4.1-1_armhf.deb
 dpkg -i python-evdev_0.4.1-1_armhf.deb
 ```
-Then you have to install Python MPD2
-```
-pip install python-mpd2
-```
+
 Then you have to download my forked variant of fsahli's music-cards from here:
 
 https://github.com/tschuehly/music-cards
 
 Then run 'python config.py' to select the RFID reader from the inputs.
-
+### RC522_music-cards extension
 ### musicbox_gpio script
 
 The next step is to download my musicbox_gpio python script from here: https://github.com/tschuehly/musicbox_gpio
@@ -113,4 +121,6 @@ To quit you just have to press CTRL + C
 
 ### Sources
 https://blog.sengotta.net/connecting-a-pcm5102a-breakout-board-to-a-raspberry-pi/
+
+
 &#169; Thomas Schühly
