@@ -23,6 +23,19 @@ Required:
 
 ### Wiring
 
+#### PCMA5102A
+To wire up the cheaper PCMA5102A breakout board you have to wire like this:
+* VCC <–> 5V Pin 2
+* GND <–> GND
+* FLT <–> GND
+* DMP <–> GND
+* SCL <–> GND
+* BCK <–> GPIO18 Pin 12
+* DIN <–> GPIO21 Pin 40
+* LCK <–> GPIO19 Pin 35
+* FMT <–> GND
+* XMT <–> 10k Resistor <–> 3,3V of the PCM5102A board
+
 * The first thing you have to do is soldering the pHAT DAC to the Raspberry.
 * I soldered all of the pins but you can see how to do it the lazy way here: [pHAT DAC Soldering](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
 * Connect the Powerbank to the Raspberry and to the audio amplifier
@@ -98,6 +111,6 @@ file:/music/foldername/
 
 To quit you just have to press CTRL + C
 
-
-
+### Sources
+https://blog.sengotta.net/connecting-a-pcm5102a-breakout-board-to-a-raspberry-pi/
 &#169; Thomas Schühly
