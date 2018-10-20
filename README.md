@@ -1,3 +1,5 @@
+# CURRENTLY IN DEVELOPMENT NOT COMPLETE
+
 # toddleplayer
 toddleplayer is the manual and a bunch of scripts to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons.
 
@@ -64,6 +66,7 @@ Burn the image to an SD Card with [Etcher](https://etcher.io/)
 3. Change 	```enable_ssh = true```
 
 4. Set ```output = hifiberry_dac```
+### Power LED
 
 ### music-cards extension
 
@@ -99,6 +102,7 @@ then you create one start.sh and start.log in a desired folder and paste this in
 #!/bin/bash
 sleep 30
 python /PATH_TO/gpio_control.py &
+python /PATH_TO/box.py &
 ```
 
 
