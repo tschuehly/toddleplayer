@@ -63,9 +63,6 @@ If you use the pHAT DAC you have to solder it. You can solder all of them or sol
 | SDA  | GPIO8 PIN 24  |
 
 ## Software
-toddleplayer is based on the Pi Musicbox Image: https://github.com/pimusicbox/pimusicbox ,
-
-the music-cards mopidy extension which I altered heavily: https://github.com/fsahli/music-cards ,
 
 
 ### Pi MusicBox
@@ -192,8 +189,18 @@ file:/music/foldername/
 To quit you just have to press CTRL + C
 
 ### Credit
-https://blog.sengotta.net/connecting-a-pcm5102a-breakout-board-to-a-raspberry-pi/
-https://pimylifeup.com/raspberry-pi-rfid-rc522/
+The toddleplayer is based on the Pi Musicbox Image: https://github.com/pimusicbox/pimusicbox ,
+
+the music-cards mopidy extension which I altered heavily: https://github.com/fsahli/music-cards ,
+
+the RC522_music-cards project:
+https://github.com/tschuehly/RC522_music-cards ,
+which uses the MFRC522-python library:
+https://github.com/mxgxw/MFRC522-python ,
+
+the python-mpd2 library:
+https://github.com/Mic92/python-mpd2 .
+
 
 
 &#169; Thomas Schühly
