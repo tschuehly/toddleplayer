@@ -43,10 +43,24 @@ To wire up the cheaper PCMA5102A breakout board you have to wire like this:
 
 XMT <–> 10k Resistor <–> 3,3V of the PCM5102A board
 
+#### PAM8403
+
+Then you wire the L ,G and R Pins of the PCMA to the Input Pins of the PAM. You connect the + and - power pins of the pam8403 directly to the 5V of the Raspberry and GND. Then you connect your speakers to rout/lout + and -.
+
 #### pHAT DAC
-If you use the pHAT DAC you have to solder it [pHAT DAC ](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
+If you use the pHAT DAC you have to solder it. You can solder all of them or solder them the  [lazy way. ](https://forums.pimoroni.com/t/phat-header-soldering-the-lazy-way/1690)
 
+#### RC-522
 
+| RC522| Raspberry     |
+|------|---------------|
+| 3.3V | 3.3V PIN 1    |
+| RST  | GPIO25 PIN 22 |
+| GND  | GND           |
+| MISO | GPIO9 PIN 21  |
+| MOSI | GPIO10 PIN19  |
+| SCK  | GPIO11 PIN 23 |
+| SDA  | GPIO8 PIN 24  |
 
 ## Software
 toddleplayer is based on the Pi Musicbox Image: https://github.com/pimusicbox/pimusicbox ,
@@ -63,12 +77,32 @@ Burn the image to an SD Card with [Etcher](https://etcher.io/)
 1. Put the SD-card into your computer. Ignore the format warning when you're on windows. Open the contents of the 'config' folder of SD-Card in your Finder/Explorer.
 
 2. Open settings.ini and add your Wifi network and password to the file
-3. Change 	```enable_ssh = true```
+3. Set 	```enable_ssh = true```
 
 4. Set ```output = hifiberry_dac```
-### Power LED
 
-### music-cards extension
+5. Set ```resize_once = true```
+
+You can also set your Spotify and Spotify-Web credentials already.
+
+Then you have to put the SD card in the Raspberry and power it up. You can lookup the IP adress on your router.
+To test your wiring connect to the toddleplayer in the webbrowser and run a radiostream unter the tab Streams.
+
+To connect to the Raspberry use your favorite ssh client like [PuTTY](https://www.putty.org/).
+
+The standard user is ```root``` and the password is ```musicbox```.
+
+### First Setup
+You have to download the required scripts and unpack them from the latest release.
+```
+cd ../
+wget https://github.com/tschuehly/toddleplayer/releases/download/test/toddleplayer.zip
+unzip toddleplayer.zip
+rm toddleplayer.zip
+cd toddleplayer/
+```
+
+### music-cards
 
 If you use a USB RFID Reader continue here. If you use the MFRC-522 continue down below with the RC522_music-cards extension.
 
@@ -79,30 +113,64 @@ wget http://dl.piwall.co.uk/python-evdev_0.4.1-1_armhf.deb
 dpkg -i python-evdev_0.4.1-1_armhf.deb
 ```
 
-Then you have to download my forked variant of fsahli's music-cards from here:
+Then you have to configure it.
 
-https://github.com/tschuehly/music-cards
+```
+cd music-cards/
+python config.py
+```
+Select the RFID reader from the inputs. Usually by pressing 0.
+### RC522_music-cards
 
-Then run 'python config.py' to select the RFID reader from the inputs.
-### RC522_music-cards extension
+```
+sudo nano /boot/config.txt
+```
+Find this line and remove the '#':
+```
+#dtparam=spi=on
+```
+Next, install Python 2.7 dev and gcc using:
+```
+sudo apt-get update
+sudo apt-get install python2.7-dev
+sudo apt-get install gcc
+```
+Then download and install the special SPI tool for python with wget.
+```
+wget https://github.com/lthiery/SPI-Py/archive/master.zip
+unzip master.zip
+rm master.zip
+cd ./SPI-Py-master
+```
+then install it by
+
+```
+sudo python setup.py install
+cd ../
+```
+Next you have to install python-mpd2 from source here
+
+```
+wget https://github.com/Mic92/python-mpd2/archive/master.zip
+
+unzip master.zip
+rm master.zip
+cd ./python-mpd2-master
+python setup.py install
+```
 ### musicbox_gpio script
 
-The next step is to download my musicbox_gpio python script from here: https://github.com/tschuehly/musicbox_gpio
 
-You also have to configure it. Place it in your desired folder but not /music because this is gonna slow down the booting sequence.
 
-The easiest way to start the script on startup is to append the following lines to the /etc/rc.local.
+The easiest way to start the script on startup is to append the following lines to the /opt/musicbox/startup.sh. You have to replace /xxxx/ with either /RC522_music-cards/ or /music-cards/
 
 ```
-/PATH_TO/start.sh 2>&1 | tee /PATH_TO/start.log
-```
+nohup python -u /toddleplayer/gpio_control.py &> /toddleplayer/gpio.log &
+echo "started gpio_control.py"
+sleep 15
+python -u /toddleplayer/xxxx/box.py &> /toddleplayer/box.log &
+echo "started box.py"
 
-then you create one start.sh and start.log in a desired folder and paste this into the start.sh
-```
-#!/bin/bash
-sleep 30
-python /PATH_TO/gpio_control.py &
-python /PATH_TO/box.py &
 ```
 
 
@@ -123,8 +191,9 @@ file:/music/foldername/
 
 To quit you just have to press CTRL + C
 
-### Sources
+### Credit
 https://blog.sengotta.net/connecting-a-pcm5102a-breakout-board-to-a-raspberry-pi/
+https://pimylifeup.com/raspberry-pi-rfid-rc522/
 
 
 &#169; Thomas Schühly
