@@ -1,5 +1,3 @@
-# CURRENTLY IN DEVELOPMENT NOT COMPLETE
-
 # toddleplayer
 toddleplayer is the manual and a bunch of scripts to create an MP3 and Spotify Player controlled through RFID Tags and GPIO Buttons.
 
